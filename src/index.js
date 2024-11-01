@@ -4,7 +4,6 @@ import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import Homepage from './Pages/Homepage';
-import Rowspage from './Pages/FieldDetailpage';
 import Navbar from './Components/Navbar';
 import Fieldspage from './Pages/Fieldspage';
 import FieldDetailpage from './Pages/FieldDetailpage';
