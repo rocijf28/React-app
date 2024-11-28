@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment
+  labels:
+    app: deployment
+    kubernetes.azure.com/generator: devhub
+  namespace: namespace-workflow-1732802045123
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deployment
+  template:
+    metadata:
+      labels:
+        app: deployment
+    spec:
+      containers:
+        - name: deployment
+          image: leakplantingregistry.azurecr.io/react-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
