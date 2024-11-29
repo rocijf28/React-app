@@ -33,5 +33,5 @@ jobs:
         
     - name: Update Kubernetes Deployment
       run: |
-        kubectl set image deployment/react-app-deployment react-app-deployment=leakplantingregistry.azurecr.io/react-app:latest
+        kubectl set image deployment/react-app-deployment react-app=leakplantingregistry.azurecr.io/react-app:latest -n leakplanting
         kubectl apply -f kubernetes/deployment.yml
