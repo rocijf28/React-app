@@ -22,13 +22,15 @@ jobs:
       run: |
         az acr login --name ${{ secrets.ACR_NAME }}
 
-    - name: Set up Kubernetes
-      env:
-        KUBECONFIG: ${{ secrets.KUBECONFIG }}
+    - name: Set up kubeconfig
       run: |
-        echo "${{ secrets.KUBECONFIG }}" | base64 --decode > kubeconfig.yaml
-        export KUBECONFIG=$(pwd)/kubeconfig.yaml
-
+        mkdir -p $HOME/.kube
+        echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
+    
+    - name: Test kubectl connectivity
+      run: |
+        kubectl get nodes 
+        
     - name: Update Kubernetes Deployment
       run: |
         kubectl set image deployment/react-app react-app=${{ secrets.ACR_NAME }}.azurecr.io/react-app:latest
