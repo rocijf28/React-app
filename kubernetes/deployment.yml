@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: react-app
-          image: ${{ secrets.ACR_LOGIN_SERVER }}/react-app:latest
+          image: leakplantingregistry.azurecr.io/react-app:latest
           resources:
             requests:
               cpu: "25m"
