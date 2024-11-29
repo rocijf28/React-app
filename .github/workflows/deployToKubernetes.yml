@@ -33,5 +33,5 @@ jobs:
         
     - name: Update Kubernetes Deployment
       run: |
-        kubectl set image deployment/react-app react-app=${{ secrets.ACR_NAME }}.azurecr.io/react-app:latest
+        kubectl set image deployment/react-app-deployment react-app-deployment=${{ secrets.ACR_NAME }}.azurecr.io/react-app:latest
         kubectl apply -f kubernetes/deployment.yml
