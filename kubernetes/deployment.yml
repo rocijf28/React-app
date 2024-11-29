@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: react-app
-          image: leakplantingregistry.azurecr.io/react-app:latest
+          image: leakplantingregistry.azurecr.io/react-app:new
           ports:
             - containerPort: 3000  # Toegevoegd
           resources:
