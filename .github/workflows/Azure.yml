@@ -52,11 +52,18 @@ jobs:
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
 
-      - name: Test kubectl connectivity
-        run: |
-          kubectl get nodes 
+      - name: Deploy to AKS
+        uses: azure/k8s-deploy@v1
+        with:
+          manifests: |
+            kubernetes/deployment.yml
+            kubernetes/service.yml
+          images: |
+            ${{ secrets.ACR_LOGIN_SERVER }}/react-app:latest
+          namespace: leakplanting
+          strategy: recreate
 
-      - name: Update Kubernetes Deployment
-        run: |
-          kubectl set image deployment/react-app-deployment react-app=${{ secrets.ACR_LOGIN_SERVER }}/react-app:latest -n leakplanting
-          kubectl apply -f kubernetes/deployment.yml
+      # - name: Update Kubernetes Deployment
+      #   run: |
+      #     kubectl set image deployment/react-app-deployment react-app=${{ secrets.ACR_LOGIN_SERVER }}/react-app:latest -n leakplanting
+      #     kubectl apply -f kubernetes/deployment.yml
