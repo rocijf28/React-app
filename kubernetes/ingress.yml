@@ -9,17 +9,17 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   tls:
-  - hosts:
-    - jouw-domein.example.com
-    secretName: react-app-tls
+    - hosts:
+        - 20-238-135-171.nip.io # Vervang dit door jouw nip.io domein
+      secretName: react-app-tls
   rules:
-  - host: 20-238-135-171.nip.io
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: react-app
-            port:
-              number: 80
+    - host: 20-238-135-171.nip.io # Vervang dit door jouw nip.io domein
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: react-app
+                port:
+                  number: 80
