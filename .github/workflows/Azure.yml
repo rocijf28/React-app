@@ -56,12 +56,18 @@ jobs:
         run: |
           kubectl get namespace leakplanting || kubectl create namespace leakplanting
 
+      - name: Apply ClusterIssuer
+        run: |
+          kubectl apply -f kubernetes/cluster-issuer.yml
+
       - name: Deploy to AKS
         uses: azure/k8s-deploy@v1
         with:
           manifests: |
+            kubernetes/cluster-issuer.yml
             kubernetes/deployment.yml
             kubernetes/service.yml
+            kubernetes/ingress.yml
           images: |
             ${{ secrets.ACR_LOGIN_SERVER }}/react-app:latest
           namespace: leakplanting
