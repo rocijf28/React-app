@@ -4,17 +4,22 @@ metadata:
   name: react-app-ingress
   namespace: leakplanting
   annotations:
-    kubernetes.io/ingress.class: traefik
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: traefik
+  tls:
+  - hosts:
+    - jouw-domein.example.com
+    secretName: react-app-tls
   rules:
-    - host: 108-142-9-2.nip.io  # Extern IP-adres met punten vervangen door streepjes
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: react-app
-                port:
-                  number: 80
+  - host: 20-238-135-171.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: react-app
+            port:
+              number: 80
