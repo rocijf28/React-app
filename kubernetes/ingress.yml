@@ -15,7 +15,7 @@ spec:
     - host: 20-238-135-171.nip.io # Vervang dit door jouw nip.io domein
       http:
         paths:
-          - path: /
+          - path: /frontend
             pathType: Prefix
             backend:
               service:
