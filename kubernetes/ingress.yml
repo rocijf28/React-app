@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - 20-238-135-171.nip.io # Vervang dit door jouw nip.io domein
+        - leakplanting.online
       secretName: react-app-tls
   rules:
-    - host: 20-238-135-171.nip.io # Vervang dit door jouw nip.io domein
+    - host: leakplanting.online
       http:
         paths:
           - path: /
