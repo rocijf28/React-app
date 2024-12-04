@@ -58,6 +58,7 @@ jobs:
           manifests: |
             kubernetes/deployment.yml
             kubernetes/service.yml
+            kubernetes/ingress.yml
           images: |
             ${{ secrets.ACR_LOGIN_SERVER }}/react-app:latest
           namespace: leakplanting
