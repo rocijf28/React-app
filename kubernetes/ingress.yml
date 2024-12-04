@@ -5,15 +5,14 @@ metadata:
   namespace: leakplanting
   annotations:
     kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   tls:
     - hosts:
-        - leakplanting.online
+        - 20-238-135-171.nip.io # Vervang dit door jouw nip.io domein
       secretName: react-app-tls
   rules:
-    - host: leakplanting.online
+    - host: 20-238-135-171.nip.io # Vervang dit door jouw nip.io domein
       http:
         paths:
           - path: /
