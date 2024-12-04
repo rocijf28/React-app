@@ -4,7 +4,7 @@ metadata:
   name: react-app
   namespace: leakplanting
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 80
     targetPort: 3000
