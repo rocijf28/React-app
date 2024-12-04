@@ -1,4 +1,4 @@
-name: CI/CD Workflow
+name: CI/CD Pipeline
 
 on:
   push:
@@ -7,33 +7,7 @@ on:
 
 jobs:
   build-and-push:
-    name: Build and Push Docker Image
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to Azure Container Registry
-        uses: azure/docker-login@v2
-        with:
-          login-server: ${{ secrets.ACR_LOGIN_SERVER }}
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.ACR_LOGIN_SERVER }}/react-app:latest
-
-  deploy:
-    name: Deploy to Kubernetes
-    runs-on: ubuntu-latest
-    needs: build-and-push
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -43,14 +17,39 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v1
-        with:
-          version: 'latest'
-
-      - name: Get AKS credentials
+      - name: Login to Azure Container Registry
         run: |
-          az aks get-credentials --resource-group leakplanting_group --name leakplanting --overwrite-existing
+          az acr login --name ${{ secrets.ACR_NAME }}
+
+      - name: Build and push Docker image
+        run: |
+          az acr build --registry ${{ secrets.ACR_NAME }} --image react-app:latest .
+
+  deploy:
+    name: Deploy to Kubernetes
+    runs-on: ubuntu-latest
+    needs: build-and-push # Zorgt ervoor dat deze job pas start na 'build-and-push'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Login to Azure Container Registry
+        run: |
+          az acr login --name ${{ secrets.ACR_NAME }}
+
+      - name: Set up kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
+
+      - name: Create Namespace if not exists
+        run: |
+          kubectl get namespace leakplanting || kubectl create namespace leakplanting
 
       - name: Deploy to AKS
         uses: azure/k8s-deploy@v1
@@ -58,12 +57,8 @@ jobs:
           manifests: |
             kubernetes/deployment.yml
             kubernetes/service.yml
+            kubernetes/ingress.yml
           images: |
             ${{ secrets.ACR_LOGIN_SERVER }}/react-app:latest
           namespace: leakplanting
           strategy: recreate
-
-      # - name: Update Kubernetes Deployment
-      #   run: |
-      #     kubectl set image deployment/react-app-deployment react-app=${{ secrets.ACR_LOGIN_SERVER }}/react-app:latest -n leakplanting
-      #     kubectl apply -f kubernetes/deployment.yml
