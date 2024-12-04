@@ -64,7 +64,8 @@ jobs:
         uses: azure/k8s-deploy@v1
         with:
           manifests: |
-            kubernetes/cluster-issuer.yml
+            kubernetes/selfsigned-issuer.yml
+            kubernetes/certificate.yml
             kubernetes/deployment.yml
             kubernetes/service.yml
             kubernetes/ingress.yml
