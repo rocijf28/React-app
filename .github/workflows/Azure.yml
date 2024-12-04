@@ -56,9 +56,13 @@ jobs:
         run: |
           kubectl get namespace leakplanting || kubectl create namespace leakplanting
 
-      - name: Apply ClusterIssuer
+      - name: Apply Self-Signed Issuer
         run: |
-          kubectl apply -f kubernetes/cluster-issuer.yml
+          kubectl apply -f kubernetes/selfsigned-issuer.yml
+
+      - name: Apply Certificate
+        run: |
+          kubectl apply -f kubernetes/certificate.yml
 
       - name: Deploy to AKS
         uses: azure/k8s-deploy@v1
