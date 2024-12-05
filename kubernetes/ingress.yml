@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: "20-238-135-171.nip.io"
+  - host: "leakplanting.online"
     http:
       paths:
       - path: "/"
@@ -20,5 +20,5 @@ spec:
               number: 80
   tls:
   - hosts:
-    - "20-238-135-171.nip.io"
+    - "leakplanting.online"
     secretName: react-app-tls
