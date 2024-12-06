@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: react-app
-  namespace leakplanting
+  namespace: leakplanting
 spec:
   replicas: 2
   selector:
