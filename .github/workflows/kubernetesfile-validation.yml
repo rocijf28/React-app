@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: validate manifests in kubernetes folder
-        uses: makocchi-git/actions-k8s-manifests-validate-kubeval@latest
+        uses: makocchi-git/actions-k8s-manifests-validate-kubeval@v1.0.1
         with:
           files: kubernetes
           token: ${{ secrets.GITHUB_TOKEN }}
