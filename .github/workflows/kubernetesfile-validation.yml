@@ -1,16 +1,21 @@
-name: Push check yml files
+name: Lint Manifests
 
-on: push
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  validation:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: validate manifests in kubernetes folder
-        uses: makocchi-git/actions-k8s-manifests-validate-kubeval@v1.0.1
+      - name: Lint k8s manifest files
+        uses: azure/k8s-lint@v3
         with:
-          files: kubernetes
-          strict: true
-          ignore_missing_schemas: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          manifests: |
+            kubernetes/deployment.yml
+            kubernetes/service.yml
+            kubernetes/ingress.yml
+            kubernets/cluster-issuer.yml
+          kubeconformOpts: -summary
