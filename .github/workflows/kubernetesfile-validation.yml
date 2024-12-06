@@ -11,4 +11,6 @@ jobs:
         uses: makocchi-git/actions-k8s-manifests-validate-kubeval@v1.0.1
         with:
           files: kubernetes
+          strict: true
+          ignore_missing_schemas: true
           token: ${{ secrets.GITHUB_TOKEN }}
