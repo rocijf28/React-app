@@ -2,7 +2,7 @@ name: Lint Manifests
 
 on:
   push:
-    branches: main 
+    branches: main
   pull_request:
     branches: main
 
@@ -10,6 +10,9 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
       - name: Lint k8s manifest files
         uses: azure/k8s-lint@v3
         with:
@@ -17,5 +20,5 @@ jobs:
             kubernetes/deployment.yml
             kubernetes/service.yml
             kubernetes/ingress.yml
-            kubernets/cluster-issuer.yml
+            kubernetes/cluster-issuer.yml
           kubeconformOpts: -summary
