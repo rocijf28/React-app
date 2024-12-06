@@ -1,0 +1,14 @@
+name: Push check
+
+on: push
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: validate manifests in kubernetes folder
+        uses: makocchi-git/actions-k8s-manifests-validate-kubeval@1.0.0
+        with:
+          files: kubernetes
+          token: ${{ secrets.GITHUB_TOKEN }}
