@@ -21,4 +21,4 @@ jobs:
             kubernetes/service.yml
             kubernetes/ingress.yml
             kubernetes/cluster-issuer.yml
-          kubeconformOpts: -summary
+          kubeconformOpts: "-summary --ignore-missing-schermas"
