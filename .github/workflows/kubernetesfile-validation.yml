@@ -1,4 +1,4 @@
-name: Push check
+name: Push check yml files
 
 on: push
 
