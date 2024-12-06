@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-      
+
       - name: Lint k8s manifest files
         uses: azure/k8s-lint@v3
         with:
@@ -21,6 +21,6 @@ jobs:
             kubernetes/service.yml
             kubernetes/ingress.yml
             kubernetes/cluster-issuer.yml
-          kubeconformOpts: "-summary -ignore-missing-schemas"
+          kubeconformOpts: -summary -ignore-missing-schemas
           lintType: kubeconform
           namespace: default
