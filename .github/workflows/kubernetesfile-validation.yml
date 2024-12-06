@@ -21,6 +21,6 @@ jobs:
             kubernetes/service.yml
             kubernetes/ingress.yml
             kubernetes/cluster-issuer.yml
-          kubeconformOpts: "-summary -ignore-missing-schemas"
+          kubeconformOpts: -ignore-missing-schemas
           lintType: kubeconform
           namespace: default
