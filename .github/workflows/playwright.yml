@@ -25,7 +25,10 @@ jobs:
       - name: Start test environment
         run: |
           npm run start:testenv &
-
+      
+      - name: Install Firebase CLI
+        run: |
+            npm install -g firebase-tools
       # Start de Firebase Emulator in de achtergrond
       - name: Start Firebase Emulator
         run: |
