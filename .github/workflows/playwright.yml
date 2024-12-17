@@ -32,7 +32,7 @@ jobs:
       # Start de Firebase Emulator in de achtergrond
       - name: Start Firebase Emulator
         run: |
-          firebase emulators:start --only auth,firestore &
+          firebase emulators:start --only auth &
       
       # Wacht tot de app bereikbaar is (pas poort aan indien nodig)
       - name: Wait for app
