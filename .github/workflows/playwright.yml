@@ -11,12 +11,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # Stel Node in met caching van npm dependencies
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+          cache: 'npm'
 
+      # Installeer dependencies (npm ci zal sneller zijn door de cache)
       - name: Install dependencies
         run: npm ci
+
+      # Cache voor Playwright browsers
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-browsers-${{ hashFiles('package-lock.json') }}
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -25,20 +36,20 @@ jobs:
       - name: Start test environment
         run: |
           npm run start:testenv &
-      
+
       - name: Install Firebase CLI
-        run: |
-            npm install -g firebase-tools
-      # Start de Firebase Emulator in de achtergrond
+        run: npm install -g firebase-tools
+
+      # Start de Firebase Emulator in de achtergrond (alleen auth als voorbeeld)
       - name: Start Firebase Emulator
         run: |
           firebase emulators:start --only auth &
-      
+
       # Wacht tot de app bereikbaar is (pas poort aan indien nodig)
       - name: Wait for app
         run: npx wait-on http://localhost:3000
-      
-      # Voer de Playwright tests uit nu de app en emulator draaien en de user bestaat.
+
+      # Voer de Playwright tests uit nu de app en emulator draaien
       - name: Run Playwright tests
         run: npx playwright test
 
