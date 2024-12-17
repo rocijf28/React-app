@@ -30,7 +30,7 @@ jobs:
           key: ${{ runner.os }}-playwright-browsers-${{ hashFiles('package-lock.json') }}
 
       - name: Install Playwright Browsers
-        run: npx playwright install
+        run: npx playwright install --with-deps
 
       # Start de testomgeving in de achtergrond
       - name: Start test environment
