@@ -19,10 +19,14 @@ test('Test of ingelogde gebruiker de chat component kan zien', async ({ page }) 
   await page1.waitForLoadState('domcontentloaded');
 
   // Controleer of de tekst zichtbaar is voordat je klikt
-  await expect(page1.getByText('Otter Orange')).toBeVisible();
-  await page1.getByText('Otter Orange').click();
+  await page1.getByRole('button', { name: 'Add new account' }).click();
+  await page1.getByRole('button', { name: 'Auto-generate user information' }).click();
+  await page1.getByRole('button', { name: 'Sign in with Google.com' }).click();
+  await page.getByRole('link', { name: 'Chat' }).click();
 
   // Wacht op de link om zichtbaar te zijn voordat je klikt
   await expect(page.getByRole('link', { name: 'Chat' })).toBeVisible();
   await page.getByRole('link', { name: 'Chat' }).click();
+
+  await expect(page.getByTestId('chat-component')).toBeVisible();
 });

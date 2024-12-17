@@ -35,13 +35,6 @@ jobs:
       - name: Wait for app
         run: npx wait-on http://localhost:3000
       
-      # Maak de testgebruiker aan met een script dat de Admin SDK gebruikt
-      # Zorg dat je een script hebt (bijv. scripts/createTestUser.js) dat via admin.auth().createUser() een user aanmaakt.
-      - name: Create test user
-        run: |
-          export FIREBASE_AUTH_EMULATOR_HOST="127.0.0.1:9099"
-          node scripts/createTestUser.js
-
       # Voer de Playwright tests uit nu de app en emulator draaien en de user bestaat.
       - name: Run Playwright tests
         run: npx playwright test

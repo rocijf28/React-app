@@ -8,7 +8,7 @@ function ChatPage() {
 
   return (
     <div >
-      <Chat data-testid='chat-component'></Chat>
+      <Chat></Chat>
     </div>
   );
 }

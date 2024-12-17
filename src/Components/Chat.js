@@ -160,7 +160,10 @@ function Chat() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg ">
+    <div
+      className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg "
+      data-testid="chat-component"
+    >
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Chat App</h2>
 
       {!selectedChatId && (
