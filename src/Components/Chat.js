@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db, auth } from "../firebase";
+import { auth, db, googleProvider } from "../firebaseConfig";
 import {
   collection,
   query,
@@ -49,7 +49,9 @@ function Chat() {
         chats.push({
           ...chatData,
           id: doc.id,
-          displayName: users.find((u) => u.id === otherParticipant)?.displayName || "Onbekend",
+          displayName:
+            users.find((u) => u.id === otherParticipant)?.displayName ||
+            "Onbekend",
         });
       });
       setChats(chats);
@@ -172,7 +174,9 @@ function Chat() {
 
           {isCreatingChat && (
             <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-3">Selecteer een gebruiker:</h3>
+              <h3 className="text-lg font-semibold mb-3">
+                Selecteer een gebruiker:
+              </h3>
               <select
                 onChange={(e) =>
                   setSelectedUser(users.find((u) => u.id === e.target.value))
@@ -243,10 +247,7 @@ function Chat() {
               </div>
             ))}
           </div>
-          <form
-            onSubmit={sendMessage}
-            className="flex items-center gap-4"
-          >
+          <form onSubmit={sendMessage} className="flex items-center gap-4">
             <input
               type="text"
               placeholder="Type je bericht..."

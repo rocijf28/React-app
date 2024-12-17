@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { auth, googleProvider } from '../firebase'; // pas pad aan naar jouw firebase.js
+import React, { useState, useEffect } from "react";
+import { auth, db, googleProvider } from "../firebaseConfig";
 import { signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
 
 function Login() {

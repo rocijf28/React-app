@@ -13,12 +13,31 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
+
     - name: Install dependencies
       run: npm ci
+
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+
+    # Start de testomgeving in de achtergrond
+    - name: Start test environment
+      run: |
+        npm run start:testenv &
+
+    # Start de Firebase Emulator in de achtergrond
+    - name: Start Firebase Emulator
+      run: |
+        firebase emulators:start --only auth,firestore &
+
+    # Wacht tot de app bereikbaar is (pas poort/URL aan indien nodig)
+    - name: Wait for app
+      run: npx wait-on http://localhost:3000
+
+    # Voer de Playwright tests uit nu de app en emulator draaien
     - name: Run Playwright tests
       run: npx playwright test
+
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
