@@ -63,6 +63,7 @@ jobs:
         with:
           manifests: |
             kubernetes/deployment.yml
+            kubernetes/service.yml
           images: |
             ${{ secrets.ACR_LOGIN_SERVER }}/react-app:latest
           namespace: leakplanting
