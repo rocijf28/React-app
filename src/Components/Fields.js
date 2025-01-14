@@ -6,7 +6,7 @@ const Fields = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:5001/fields`)
+        fetch(`http://108.141.85.25/fields`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
