@@ -56,8 +56,6 @@ jobs:
         run: |
           kubectl get namespace leakplanting || kubectl create namespace leakplanting
 
-      
-
       - name: Deploy to AKS
         uses: azure/k8s-deploy@v1
         with:
@@ -68,3 +66,8 @@ jobs:
             ${{ secrets.ACR_LOGIN_SERVER }}/react-app:latest
           namespace: leakplanting
           strategy: recreate
+
+      - name: Deploy Uptime Kuma
+        run: |
+          kubectl get namespace uptime-kuma || kubectl create namespace uptime-kuma
+          kubectl apply -f kubernetes/uptime-kuma.yaml
