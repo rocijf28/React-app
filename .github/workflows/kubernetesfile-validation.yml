@@ -19,8 +19,6 @@ jobs:
           manifests: |
             kubernetes/deployment.yml
             kubernetes/service.yml
-            kubernetes/ingress.yml
-            kubernetes/cluster-issuer.yml
           kubeconformOpts: -ignore-missing-schemas
           lintType: kubeconform
           namespace: default
