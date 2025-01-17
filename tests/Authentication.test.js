@@ -21,7 +21,6 @@ test('Test of ingelogde gebruiker de chat component kan zien', async ({ page }) 
   await page1.getByRole('button', { name: 'Sign in with Google.com' }).click();
   await page.getByRole('link', { name: 'Chat' }).click();
 
-  // Wacht op de link om zichtbaar te zijn voordat je klikt
   await expect(page.getByRole('link', { name: 'Chat' })).toBeVisible();
   await page.getByRole('link', { name: 'Chat' }).click();
 
